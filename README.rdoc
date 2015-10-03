@@ -7,22 +7,47 @@ Things you may want to cover:
 
 * Ruby version
 
-* System dependencies
+2.2.3
 
-* Configuration
+~~~bash
+bundle install
+~~~
 
-* Database creation
+# Configuration TL;DR
 
-* Database initialization
+You will need to create a [user model](#model-concerns), [define routes](#mounting-routes), [include concerns](#controller-methods), and you may want to alter some of the [default settings](#initializer-settings) for this gem. Run the following command for an easy one-step installation:
 
-* How to run the test suite
+~~~bash
+rails g devise_token_auth:install [USER_CLASS] [MOUNT_PATH]
+~~~
 
-* Services (job queues, cache servers, search engines, etc.)
+**Example**:
 
-* Deployment instructions
+~~~bash
+rails g devise_token_auth:install User auth
+~~~
 
-* ...
+This generator accepts the following optional arguments:
+
+| Argument | Default | Description |
+|---|---|---|
+| USER_CLASS | `User` | The name of the class to use for user authentication. |
+| MOUNT_PATH | `auth` | The path at which to mount the authentication routes. [Read more](#usage-tldr). |
+
+The following events will take place when using the install generator:
+
+* An initializer will be created at `config/initializers/devise_token_auth.rb`. [Read more](#initializer-settings).
+
+* A model will be created in the `app/models` directory. If the model already exists, a concern will be included at the top of the file. [Read more](#model-concerns).
+
+* Routes will be appended to file at `config/routes.rb`. [Read more](#mounting-routes).
+
+* A concern will be included by your application controller at `app/controllers/application_controller.rb`. [Read more](#controller-methods).
+
+* A migration file will be created in the `db/migrate` directory. Inspect the migrations file, add additional columns if necessary, and then run the migration:
+
+~~~bash
+rake db:migrate
+~~~
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
